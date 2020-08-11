@@ -1,7 +1,7 @@
 # Group 2 - Order
-* Agung : Restful API
-* Dicky : API Docs
-* Musfirotus : Database
+* Agung : Restful API.
+* Dicky : API Docs.
+* Musfirotus : sequelize-cli.
 
 ## Third Pary
 Raja Ongkir, get shipment price from raja ongkir and upate in order table
