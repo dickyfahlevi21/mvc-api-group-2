@@ -4,7 +4,8 @@
   "description": "MVC Concept and API Docs for RajaOngkir",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "nodemon app.js"
   },
   "repository": {
     "type": "git",
@@ -32,8 +33,5 @@
   "devDependencies": {
     "nodemon": "^2.0.4",
     "sequelize-cli": "^6.2.0"
-  },
-  "dependencies": {
-    "sequelize": "^6.3.4"
   }
 }
