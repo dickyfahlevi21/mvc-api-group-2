@@ -8,11 +8,7 @@ const response = {
 
 const attUser = ['username', 'password', 'email', 'full_name'];
 const attProduct = ['name', 'price', 'weight', 'photo'];
-<<<<<<< HEAD:src/controllers/userController.js
 const attOrder = ['address', 'postcode', 'status', 'shipment_detail'];
-=======
-const attOrder = ['address', 'postcode', 'statu', 'shipment_detail'];
->>>>>>> 445eeeb48b1f4bb57f42eaad3d1f2464ac8bb58c:src/controller/userController.js
 
 class UserController {
 
@@ -54,22 +50,14 @@ class UserController {
         } = req;
 
         try {
-<<<<<<< HEAD:src/controllers/userController.js
             const saveUser = await users.create({
-=======
-            const saveUser = await authors.create({
->>>>>>> 445eeeb48b1f4bb57f42eaad3d1f2464ac8bb58c:src/controller/userController.js
                 username, password, email, full_name
             });
             response.data = {
                 username: saveUser.username,
                 password: saveUser.password,
                 email: saveUser.email,
-<<<<<<< HEAD:src/controllers/userController.js
                 full_name:saveUser.full_name
-=======
-                full_name: saveUser.full_name
->>>>>>> 445eeeb48b1f4bb57f42eaad3d1f2464ac8bb58c:src/controller/userController.js
             };
             response.status = true;
             response.message = "Berhasil tambah data"
@@ -82,11 +70,7 @@ class UserController {
         }
     }
 
-<<<<<<< HEAD:src/controllers/userController.js
     static async getUser(req, res) {
-=======
-    static async getUsers(req, res) {
->>>>>>> 445eeeb48b1f4bb57f42eaad3d1f2464ac8bb58c:src/controller/userController.js
         const { id } = req.params;
         const userDetail = await users.findByPk(
             id, {
@@ -156,20 +140,12 @@ class UserController {
 
     static async deleteUsers(req, res) {
         const { id } = req.params;
-<<<<<<< HEAD:src/controllers/userController.js
         const delUsers = await users.destroy({ where: {
-=======
-        const delUser = await users.destroy({ where: {
->>>>>>> 445eeeb48b1f4bb57f42eaad3d1f2464ac8bb58c:src/controller/userController.js
             id: id
         }});
 
         try {
-<<<<<<< HEAD:src/controllers/userController.js
             if (delUsers) {
-=======
-            if (delUser) {
->>>>>>> 445eeeb48b1f4bb57f42eaad3d1f2464ac8bb58c:src/controller/userController.js
                 response.status = true;
                 response.data = `ID : ${id}`;
                 response.message = `Data author berhasil dihapus`;
