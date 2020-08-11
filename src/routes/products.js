@@ -2,13 +2,13 @@ const express = require('express');
 const router = express.Router();
 const verify = require('../middleware/verifyToken')
 
-const PostController = require('../controllers/postController');
+const ProductController = require('../controllers/productController');
 
 router
-    .get('/', verify, PostController.getPosts)
-    .get('/:id', verify, PostController.getPost)
-    .post('/', verify, PostController.savePost)
-    .delete('/del/:id', verify, PostController.deletePost)
-    .patch('/:id', verify, PostController.updatePost)
+    .get('/', verify, ProductController.getProducts)
+    .get('/:id', verify,ProductController.getProduct)
+    .post('/', verify, ProductController.saveProducts)
+    .delete('/del/:id', verify, ProductController.deleteProduct)
+    .patch('/:id', verify, ProductController.updateProducts)
 
 module.exports = router;

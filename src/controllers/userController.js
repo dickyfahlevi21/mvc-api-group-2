@@ -8,7 +8,7 @@ const response = {
 
 const attUser = ['username', 'password', 'email', 'full_name'];
 const attProduct = ['name', 'price', 'weight', 'photo'];
-const attOrder = ['address', 'postcode', 'statu', 'shipment_detail'];
+const attOrder = ['address', 'postcode', 'status', 'shipment_detail'];
 
 class UserController {
 
@@ -50,14 +50,14 @@ class UserController {
         } = req;
 
         try {
-            const saveUser = await authors.create({
+            const saveUser = await users.create({
                 username, password, email, full_name
             });
             response.data = {
                 username: saveUser.username,
                 password: saveUser.password,
                 email: saveUser.email,
-                full_name: saveUser.full_name
+                full_name:saveUser.full_name
             };
             response.status = true;
             response.message = "Berhasil tambah data"
@@ -70,7 +70,7 @@ class UserController {
         }
     }
 
-    static async getUsers(req, res) {
+    static async getUser(req, res) {
         const { id } = req.params;
         const userDetail = await users.findByPk(
             id, {
@@ -140,12 +140,12 @@ class UserController {
 
     static async deleteUsers(req, res) {
         const { id } = req.params;
-        const delUser = await users.destroy({ where: {
+        const delUsers = await users.destroy({ where: {
             id: id
         }});
 
         try {
-            if (delUser) {
+            if (delUsers) {
                 response.status = true;
                 response.data = `ID : ${id}`;
                 response.message = `Data author berhasil dihapus`;

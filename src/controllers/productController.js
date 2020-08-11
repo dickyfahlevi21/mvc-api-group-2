@@ -1,31 +1,32 @@
-const { posts, comments, authors } = require("../models");
+const { users, products, orders } = require("../models");
 
 const response = {
   status: false,
   message: "",
   data: [],
 };
-const attAuthor = ['username', 'email', 'profile'];
-const attPost = ['title', 'content', 'tags', 'status'];
-const attComment = ['content', 'status', 'email', 'url'];
 
-class PostController {
+const attUser = ['username', 'password', 'email', 'full_name'];
+const attProduct = ['name', 'price', 'weight', 'photo'];
+const attOrder = ['address', 'postcode', 'status', 'shipment_detail'];
 
-    static async getPosts(req, res){
+class ProductController {
+
+    static async getProducts(req, res){
         try {
-            const findposts = await posts.findAll({
-                attributes: attPost,
+            const findProducts = await products.findAll({
+                attributes: attProduct,
                 include: [{
-                    model: authors,
-                    attributes: attAuthor,
+                    model: users,
+                    attributes: attUser,
                     include: [{
-                        model: comments,
-                        attributes: attComment,
+                        model: orders,
+                        attributes: attOrder,
                     }]
                 }]
             });
-            if (findposts.length !== 0) {
-                response.data = findposts;
+            if (findProducts.length !== 0) {
+                response.data = findProducts;
                 response.status = true;
                 response.message = "Data ditemukan!"
                 res.status(200).json(response);
@@ -43,25 +44,25 @@ class PostController {
         }
     }
 
-    static async getPost(req, res) {
+    static async getProduct(req, res) {
         const { id } = req.params;
-        const postdetail = await posts.findByPk(
+        const productDetail = await products.findByPk(
             id, {
-                attributes: attPost,
+                attributes: attProduct,
                 include: [{
-                    model: authors,
-                    attributes: attAuthor,
+                    model: users,
+                    attributes: attUser,
                     include: [{
-                        model: comments,
-                        attributes: attComment
+                        model: orders,
+                        attributes: attOrder
                     }] 
                 }]
             }
         );
         try {
-            if (postdetail) {
+            if (productDetail) {
                 response.status = true;
-                response.data = postdetail;
+                response.data = productDetail;
                 response.message = "Data ditemukan!";
                 res.status(200).json(response);
             } else {
@@ -78,22 +79,22 @@ class PostController {
         }
     }
 
-    static async savePost(req, res) {
+    static async saveProducts(req, res) {
         const {
-            body: { title, content, tags, status, authorId }
+            body: { name, price, weight, photo }
         } = req;
 
         try {
-            const savePost = await posts.create({
-                title, content, tags, status, authorId
+            const saveProduct = await products.create({
+                name, price, weight, photo
             });
             response.status = true;
             response.message = "Berhasil tambah data"
             response.data = {
-                Title: savePost.title,
-                Content: savePost.content,
-                Tags: savePost.tags,
-                Status: savePost.status
+                name: saveProduct.name,
+                price: saveProduct.price,
+                weight: saveProduct.weight,
+                photo: saveProduct.photo
             };
             res.status(201).json(response);
         } catch (error) {
@@ -104,25 +105,25 @@ class PostController {
         }
     }
     
-    static async updatePost(req, res) {
+    static async updateProducts(req, res) {
         const { id } = req.params;
-        const { title, content, tags, status, authorId } = req.body;
-        const pos = await posts.update({ title, content, tags, status, authorId },
+        const { name, price, weight, photo } = req.body;
+        const pos = await products.update({ name, price, weight, photo },
         { where: { id: id } });
 
         try {
             if (pos) {
                 response.status = true
                 response.message = `Data post berhasil diubah`;
-                response.data = await posts.findByPk(
+                response.data = await products.findByPk(
                     id, {
-                        attributes: attPost,
+                        attributes: attProduct,
                         include: [{
-                            model: authors,
-                            attributes: attAuthor,
+                            model: users,
+                            attributes: attUser,
                             include: [{
-                                model: comments,
-                                attributes: attComment
+                                model: orders,
+                                attributes: attOrder
                             }] 
                         }]
                 });
@@ -141,14 +142,14 @@ class PostController {
         }
     }
 
-    static async deletePost(req, res) {
+    static async deleteProduct(req, res) {
         const { id } = req.params;
-        const delPost = await posts.destroy({ where: {
+        const delProduct = await products.destroy({ where: {
             id: id
         }});
 
         try {
-            if (delPost) {
+            if (delProduct) {
                 response.status = true;
                 response.data = `ID : ${id}`
                 response.message = `Data post berhasil dihapus`;
@@ -168,4 +169,4 @@ class PostController {
     }
 }
 
-module.exports = PostController;
+module.exports = ProductController;

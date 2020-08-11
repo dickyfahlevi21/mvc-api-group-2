@@ -1,38 +1,39 @@
-const { posts, comments, authors } = require("../models");
+const { users, products, orders } = require("../models");
 
 const response = {
   status: false,
   message: "",
   data: [],
 };
-const attAuthor = ['username', 'email', 'profile'];
-const attPost = ['title', 'content', 'tags', 'status'];
-const attComment = ['content', 'status', 'email', 'url'];
 
-class PostController {
+const attUser = ['username', 'password', 'email', 'full_name'];
+const attProduct = ['name', 'price', 'weight', 'photo'];
+const attOrder = ['address', 'postcode', 'status', 'shipment_detail'];
 
-    static async getPosts(req, res){
+class OrderController {
+
+    static async getOrders(req, res){
         try {
-            const findposts = await posts.findAll({
-                attributes: attPost,
+            const findOrder = await orders.findAll({
+                attributes: attOrder,
                 include: [{
-                    model: authors,
-                    attributes: attAuthor,
+                    model: products,
+                    attributes: attProduct,
                     include: [{
-                        model: comments,
-                        attributes: attComment,
-                    }]
+                        model: users,
+                        attributes: attUser
+                    }] 
                 }]
             });
-            if (findposts.length !== 0) {
-                response.data = findposts;
+            if (findOrder.length !== 0) {
                 response.status = true;
-                response.message = "Data ditemukan!"
+                response.data = findOrder;
+                response.message = "Data ditemukan!";
                 res.status(200).json(response);
             } else {
                 response.data = '';
                 response.status = false;
-                response.message = "Data tidal ditemukan!";
+                response.message = "Data tidak ditemukan!";
                 res.status(400).json(response);
             }
         } catch (err) {
@@ -43,25 +44,51 @@ class PostController {
         }
     }
 
-    static async getPost(req, res) {
+    static async saveOrders(req, res) {
+        const {
+            body: {address, postcode, productId, userId,status, shipment_detail }
+        } = req;
+
+        try {
+            const saveOrder = await orders.create({
+                address, postcode, productId, userId,status, shipment_detail
+            });
+            response.status = true;
+            response.message = "Berhasil simpan data";
+            response.data = {
+                address: saveOrder.address,
+                postcode: saveOrder.postcode,
+                status: saveOrder.status,
+                shipment_detail: saveOrder.shipment_detail,
+            };
+            res.status(201).json(response);
+        } catch {
+            response.data = '';
+            response.status = false;
+            response.message = "ID author / ID post tidak ada!";
+            res.status(400).json(response);
+        }
+    }
+
+    static async getOrder(req, res) {
         const { id } = req.params;
-        const postdetail = await posts.findByPk(
+        const orderDetail = await orders.findByPk(
             id, {
-                attributes: attPost,
+                attributes: attOrder,
                 include: [{
-                    model: authors,
-                    attributes: attAuthor,
+                    model: products,
+                    attributes: attProduct,
                     include: [{
-                        model: comments,
-                        attributes: attComment
+                        model: users,
+                        attributes: attUser
                     }] 
                 }]
             }
         );
         try {
-            if (postdetail) {
+            if (orderDetail) {
                 response.status = true;
-                response.data = postdetail;
+                response.data = orderDetail;
                 response.message = "Data ditemukan!";
                 res.status(200).json(response);
             } else {
@@ -77,60 +104,34 @@ class PostController {
             res.status(404).json(response);
         }
     }
-
-    static async savePost(req, res) {
-        const {
-            body: { title, content, tags, status, authorId }
-        } = req;
-
-        try {
-            const savePost = await posts.create({
-                title, content, tags, status, authorId
-            });
-            response.status = true;
-            response.message = "Berhasil tambah data"
-            response.data = {
-                Title: savePost.title,
-                Content: savePost.content,
-                Tags: savePost.tags,
-                Status: savePost.status
-            };
-            res.status(201).json(response);
-        } catch (error) {
-            response.data = '';
-            response.status = false;
-            response.message = "ID author tidak ditemukan!";
-            res.status(400).json(response);
-        }
-    }
     
-    static async updatePost(req, res) {
+    static async updateOrder(req, res) {
         const { id } = req.params;
-        const { title, content, tags, status, authorId } = req.body;
-        const pos = await posts.update({ title, content, tags, status, authorId },
+        const { address, postcode, productId, userId,status, shipment_detail } = req.body;
+        const auth = await orders.update({ address, postcode, productId, userId,status, shipment_detail },
         { where: { id: id } });
 
         try {
-            if (pos) {
-                response.status = true
-                response.message = `Data post berhasil diubah`;
-                response.data = await posts.findByPk(
+            if (auth) {
+                response.data = true;
+                response.message = `Data berhasil diubah`;
+                response.data = await orders.findByPk(
                     id, {
-                        attributes: attPost,
+                        attributes: attOrder,
                         include: [{
-                            model: authors,
-                            attributes: attAuthor,
+                            model: products,
+                            attributes: attProduct,
                             include: [{
-                                model: comments,
-                                attributes: attComment
+                                model: users,
+                                attributes: attUser
                             }] 
                         }]
-                });
+                    });
                 res.status(200).json(response);
             } else {
                 response.data = '';
                 response.status = false;
-                response.message = "Data gagal diperbarui!";
+                response.message = "Data gagal diubah!";
                 res.status(400).json(response);
             }
         } catch (err) {
@@ -141,17 +142,17 @@ class PostController {
         }
     }
 
-    static async deletePost(req, res) {
+    static async deleteOders(req, res) {
         const { id } = req.params;
-        const delPost = await posts.destroy({ where: {
+        const delComment = await orders.destroy({ where: {
             id: id
         }});
 
         try {
-            if (delPost) {
+            if (delComment) {
                 response.status = true;
+                response.message = `Data berhasil dihapus`;
                 response.data = `ID : ${id}`
-                response.message = `Data post berhasil dihapus`;
                 res.status(200).json(response);
             } else {
                 response.data = '';
@@ -168,4 +169,4 @@ class PostController {
     }
 }
 
-module.exports = PostController;
+module.exports = OrderController;

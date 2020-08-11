@@ -11,11 +11,19 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+<<<<<<< HEAD
+      products.hasMany(models.orders, {
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
+      });
+      products.belongsTo(models.users, { foreignKey: products.userId });
+=======
       posts.hasMany(models.orders, {
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE'
       });
       posts.belongsTo(models.users, { foreignKey: products.userId });
+>>>>>>> 445eeeb48b1f4bb57f42eaad3d1f2464ac8bb58c
     }
   };
   products.init({
