@@ -1,7 +1,7 @@
 # Group 2 - Order
-* Agung
-* Dicky
-* Musfirotus
+* Agung : Restful API
+* Dicky : API Docs
+* Musfirotus : Database
 
 ## Third Pary
 Raja Ongkir, get shipment price from raja ongkir and upate in order table
