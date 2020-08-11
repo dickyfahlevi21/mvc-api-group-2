@@ -19,10 +19,9 @@ class OrderController {
                 include: [{
                     model: products,
                     attributes: attProduct,
-                    include: [{
-                        model: users,
-                        attributes: attUser
-                    }] 
+                },{
+                    model: users,
+                    attributes: attUser
                 }]
             });
             if (findOrder.length !== 0) {
@@ -78,10 +77,9 @@ class OrderController {
                 include: [{
                     model: products,
                     attributes: attProduct,
-                    include: [{
-                        model: users,
-                        attributes: attUser
-                    }] 
+                },{
+                    model: users,
+                    attributes: attUser
                 }]
             }
         );
@@ -121,10 +119,9 @@ class OrderController {
                         include: [{
                             model: products,
                             attributes: attProduct,
-                            include: [{
-                                model: users,
-                                attributes: attUser
-                            }] 
+                        },{
+                            model: users,
+                            attributes: attUser
                         }]
                     });
                 res.status(200).json(response);
