@@ -17,11 +17,11 @@ class UserController {
             const findUsers = await users.findAll({
                 attributes: attUser,
                 include: [{
-                    model: products,
-                    attributes: attProduct,
+                    model: orders,
+                    attributes: attOrder,
                     include: [{
-                        model: orders,
-                        attributes: attOrder
+                        model: products,
+                        attributes: attProduct
                     }] 
                 }]
             });
@@ -76,12 +76,12 @@ class UserController {
             id, {
                 attributes: attUser,
                 include: [{
-                    model: products,
-                    attributes: attProduct,
+                    model: orders,
+                    attributes: attOrder,
                     include: [{
-                        model: orders,
-                        attributes: attOrder
-                    }] 
+                        model: products,
+                        attributes: attProduct
+                    }]
                 }]
             }
         );
@@ -119,16 +119,21 @@ class UserController {
                     id, {
                         attributes: attUser,
                         include: [{
-                            model: products,
-                            attributes: attProduct,
+                            model: orders,
+                            attributes: attOrder,
                             include: [{
-                                model: orders,
-                                attributes: attOrder
+                                model: products,
+                                attributes: attProduct
                             }] 
                         }]
                     }
                 );
                 res.status(200).json(response);
+            } else {
+                response.status = false;
+                response.data = '';
+                response.message = "Data tidak ditemukan!";
+                res.status(400).json(response);
             }
         } catch (err) {
             response.status = false;

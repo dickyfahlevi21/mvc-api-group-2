@@ -1,4 +1,4 @@
-const { users,products,orders } = require("../models");
+const { users, products, orders } = require("../models");
 const { registerValidation, loginValidation } = require("../../validation");
 const bcrypt = require("bcryptjs");
 const jwt = require('jsonwebtoken');
