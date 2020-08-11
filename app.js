@@ -4,7 +4,7 @@ const cors = require('cors');
 const app = express();
 const PORT = process.env.PORT || 4000;
 
-
+// kuhapus karna bikin error mas
 //Router
 const apiRouter = require('./routes/routers');
 const routeUser = require('./src/routes/users')

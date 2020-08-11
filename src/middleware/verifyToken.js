@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+  
+>>>>>>> 445eeeb48b1f4bb57f42eaad3d1f2464ac8bb58c
 const jwt = require('jsonwebtoken')
 
 module.exports = (req, res, next) => {
