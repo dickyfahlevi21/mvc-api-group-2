@@ -1,4 +1,4 @@
-const { authors, posts, comments } = require("../models");
+const { users, products, orders } = require("../models");
 
 const response = {
   status: false,
@@ -6,27 +6,27 @@ const response = {
   data: [],
 };
 
-const attAuthor = ['username', 'email', 'profile'];
-const attPost = ['title', 'content', 'tags', 'status'];
-const attComment = ['content', 'status', 'email', 'url'];
+const attUser = ['username', 'password', 'email', 'full_name'];
+const attProduct = ['name', 'price', 'weight', 'photo'];
+const attOrder = ['address', 'postcode', 'status', 'shipment_detail'];
 
-class AuthorController {
+class UserController {
 
-    static async getAuthors(req, res){
+    static async getUsers(req, res){
         try {
-            const findauthors = await authors.findAll({
-                attributes: attAuthor,
+            const findUsers = await users.findAll({
+                attributes: attUser,
                 include: [{
-                    model: posts,
-                    attributes: attPost,
+                    model: products,
+                    attributes: attProduct,
                     include: [{
-                        model: comments,
-                        attributes: attComment
+                        model: orders,
+                        attributes: attOrder
                     }] 
                 }]
             });
-            if (findauthors.length !== 0) {
-                response.data = findauthors;
+            if (findUsers.length !== 0) {
+                response.data = findUsers;
                 response.status = true;
                 response.message = "Data found!"
                 res.status(200).json(response);
@@ -44,20 +44,20 @@ class AuthorController {
         }
     }
 
-    static async saveAuthor(req, res) {
+    static async saveUsers(req, res) {
         const {
-            body: {username, password, salt, email, profile}
+            body: {username, password, email, full_name}
         } = req;
 
         try {
-            const saveAuthor = await authors.create({
-                username, password, salt, email, profile
+            const saveUser = await users.create({
+                username, password, email, full_name
             });
             response.data = {
-                Username: saveAuthor.username,
-                Salt: saveAuthor.salt,
-                email: saveAuthor.email,
-                Profile: saveAuthor.profile
+                username: saveUser.username,
+                password: saveUser.password,
+                email: saveUser.email,
+                full_name:saveUser.full_name
             };
             response.status = true;
             response.message = "Berhasil tambah data"
@@ -70,25 +70,25 @@ class AuthorController {
         }
     }
 
-    static async getAuthor(req, res) {
+    static async getUser(req, res) {
         const { id } = req.params;
-        const authordetail = await authors.findByPk(
+        const userDetail = await users.findByPk(
             id, {
-                attributes: attAuthor,
+                attributes: attUser,
                 include: [{
-                    model: posts,
-                    attributes: attPost,
+                    model: products,
+                    attributes: attProduct,
                     include: [{
-                        model: comments,
-                        attributes: attComment
+                        model: orders,
+                        attributes: attOrder
                     }] 
                 }]
             }
         );
         try {
-            if (authordetail) {
+            if (userDetail) {
                 response.status = true;
-                response.data = authordetail;
+                response.data = userDetail;
                 response.message = "Data ditemukan!";
                 res.status(200).json(response);
             } else {
@@ -105,25 +105,25 @@ class AuthorController {
         }
     }
     
-    static async updateAuthor(req, res) {
+    static async updateUsers(req, res) {
         const { id } = req.params;
-        const { username, password, salt, email, profile } = req.body;
-        const auth = await authors.update({ username, password, salt, email, profile },
+        const { username, password, email, full_name } = req.body;
+        const auth = await users.update({ username, password, email, full_name },
         { where: { id: id } });
 
         try {
             if (auth) {
                 response.status = true;
                 response.message = `Data author berhasil diedit`;
-                response.data = await authors.findByPk(
+                response.data = await users.findByPk(
                     id, {
-                        attributes: attAuthor,
+                        attributes: attUser,
                         include: [{
-                            model: posts,
-                            attributes: attPost,
+                            model: products,
+                            attributes: attProduct,
                             include: [{
-                                model: comments,
-                                attributes: attComment
+                                model: orders,
+                                attributes: attOrder
                             }] 
                         }]
                     }
@@ -138,14 +138,14 @@ class AuthorController {
         }
     }
 
-    static async deleteAuthor(req, res) {
+    static async deleteUsers(req, res) {
         const { id } = req.params;
-        const delAuthor = await authors.destroy({ where: {
+        const delUsers = await users.destroy({ where: {
             id: id
         }});
 
         try {
-            if (delAuthor) {
+            if (delUsers) {
                 response.status = true;
                 response.data = `ID : ${id}`;
                 response.message = `Data author berhasil dihapus`;
@@ -160,4 +160,4 @@ class AuthorController {
     }
 }
 
-module.exports = AuthorController;
+module.exports = UserController;
