@@ -11,6 +11,14 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      authors.hasMany(models.products, {
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
+      });
+      authors.hasMany(models.orders, {
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
+      });
     }
   };
   users.init({

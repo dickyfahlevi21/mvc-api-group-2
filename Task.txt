@@ -1,0 +1,24 @@
+
+Controller :
+ - jwtController
+ - orderController
+ - productController
+ - userController (on progress)
+
+Middleware :
+ - verifyToken
+
+Routes :
+ - jwt
+ - orders
+ - products
+ - users
+
+ - app.js
+ - validation.js
+
+Models :
+ - index (done)
+ - orders
+ - products
+ - users
