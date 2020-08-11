@@ -17,11 +17,11 @@ class ProductController {
             const findProducts = await products.findAll({
                 attributes: attProduct,
                 include: [{
-                    model: users,
-                    attributes: attUser,
+                    model: orders,
+                    attributes: attOrder,
                     include: [{
-                        model: orders,
-                        attributes: attOrder,
+                        model: users,
+                        attributes: attUser,
                     }]
                 }]
             });
@@ -50,12 +50,12 @@ class ProductController {
             id, {
                 attributes: attProduct,
                 include: [{
-                    model: users,
-                    attributes: attUser,
+                    model: orders,
+                    attributes: attOrder,
                     include: [{
-                        model: orders,
-                        attributes: attOrder
-                    }] 
+                        model: users,
+                        attributes: attUser,
+                    }]
                 }]
             }
         );
@@ -119,12 +119,12 @@ class ProductController {
                     id, {
                         attributes: attProduct,
                         include: [{
-                            model: users,
-                            attributes: attUser,
+                            model: orders,
+                            attributes: attOrder,
                             include: [{
-                                model: orders,
-                                attributes: attOrder
-                            }] 
+                                model: users,
+                                attributes: attUser,
+                            }]
                         }]
                 });
                 res.status(200).json(response);

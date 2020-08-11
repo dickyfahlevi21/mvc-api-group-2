@@ -155,6 +155,11 @@ class UserController {
                 response.data = `ID : ${id}`;
                 response.message = `Data author berhasil dihapus`;
                 res.status(200).json(response);
+            } else {
+                response.status = false;
+                response.data = '';
+                response.message = "Data tidak ditemukan!";
+                res.status(400).json(response);
             }
         } catch (err) {
             response.status = false;

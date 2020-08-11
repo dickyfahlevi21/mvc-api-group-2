@@ -34,27 +34,27 @@ class LoginController {
   }
 
   static async register(req, res) {
-    const { username, password, email,full_name } = req.body;
+    const { username, password, email, full_name } = req.body;
 
     // validate before become author
     const { error } = registerValidation(req.body);
     if(error) return res.status(400).json(error.details[0].message)
 
     // Check if it existing author's email
-    const emailExist = await authors.findOne({ where: { email: email } })
+    const emailExist = await users.findOne({ where: { email: email } })
 
     // Check if it existing author's username
-    const usernameExist = await authors.findOne({ where: { username: username } })
+    const usernameExist = await users.findOne({ where: { username: username } })
 
     // Hash passwords
-//    const salted = await bcrypt.genSalt(10);
-//    const hashedPassword = await bcrypt.hash(password, salted);
+    // const salted = await bcrypt.genSalt(10);
+    // const hashedPassword = await bcrypt.hash(password, salted);
 
     try {
       if (usernameExist) return res.status(404).json('Username already exists')
       else if (emailExist) return res.status(404).send('Email already exists')
       else {
-        const savedUser = await authors.create({
+        const savedUser = await users.create({
           username, password, email, full_name
         });
         response.data = {
