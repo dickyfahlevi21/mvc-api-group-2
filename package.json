@@ -1,0 +1,26 @@
+{
+  "name": "mvc-api-group-2",
+  "version": "1.0.0",
+  "description": "MVC Concept and API Docs for RajaOngkir",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dickyfahlevi21/mvc-api-group-2.git"
+  },
+  "keywords": [
+    "MVC",
+    "Postman",
+    "Sequelize",
+    "Express",
+    "MySql"
+  ],
+  "author": "Musfirotus, Dicky, Agung",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dickyfahlevi21/mvc-api-group-2/issues"
+  },
+  "homepage": "https://github.com/dickyfahlevi21/mvc-api-group-2#readme"
+}
