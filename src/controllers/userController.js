@@ -8,7 +8,7 @@ const response = {
 
 const attUser = ['username', 'password', 'email', 'full_name'];
 const attProduct = ['name', 'price', 'weight', 'photo'];
-const attOrder = ['address', 'postcode', 'status', 'shipment_detail'];
+const attOrder = ['address', 'postcode', 'status', 'shipment_detail', 'shipment_price'];
 
 class UserController {
 

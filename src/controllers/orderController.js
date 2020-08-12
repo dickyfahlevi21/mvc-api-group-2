@@ -8,7 +8,7 @@ const response = {
 
 const attUser = ['username', 'password', 'email', 'full_name'];
 const attProduct = ['name', 'price', 'weight', 'photo'];
-const attOrder = ['address', 'postcode', 'status', 'shipment_detail'];
+const attOrder = ['address', 'postcode', 'status', 'shipment_detail', 'shipment_price'];
 
 class OrderController {
 
@@ -45,12 +45,12 @@ class OrderController {
 
     static async saveOrders(req, res) {
         const {
-            body: {address, postcode, productId, userId,status, shipment_detail }
+            body: {address, postcode, productId, userId,status, shipment_detail, shipment_price }
         } = req;
 
         try {
             const saveOrder = await orders.create({
-                address, postcode, productId, userId,status, shipment_detail
+                address, postcode, productId, userId,status, shipment_detail, shipment_price
             });
             response.status = true;
             response.message = "Berhasil simpan data";
@@ -59,6 +59,7 @@ class OrderController {
                 postcode: saveOrder.postcode,
                 status: saveOrder.status,
                 shipment_detail: saveOrder.shipment_detail,
+                shipment_price: saveOrder.shipment_price
             };
             res.status(201).json(response);
         } catch {
@@ -105,8 +106,8 @@ class OrderController {
     
     static async updateOrder(req, res) {
         const { id } = req.params;
-        const { address, postcode, productId, userId,status, shipment_detail } = req.body;
-        const auth = await orders.update({ address, postcode, productId, userId,status, shipment_detail },
+        const { address, postcode, productId, userId,status, shipment_detail, shipment_price } = req.body;
+        const auth = await orders.update({ address, postcode, productId, userId,status, shipment_detail, shipment_price },
         { where: { id: id } });
 
         try {
