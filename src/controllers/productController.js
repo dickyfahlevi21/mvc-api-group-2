@@ -8,7 +8,7 @@ const response = {
 
 const attUser = ['username', 'password', 'email', 'full_name'];
 const attProduct = ['name', 'price', 'weight', 'photo'];
-const attOrder = ['address', 'postcode', 'status', 'shipment_detail', 'shipment_price'];
+const attOrder = ['address', 'postcode', 'status', 'shipment_detail'];
 
 class ProductController {
 
@@ -114,7 +114,7 @@ class ProductController {
         try {
             if (pos) {
                 response.status = true
-                response.message = `Data product berhasil diubah`;
+                response.message = `Data post berhasil diubah`;
                 response.data = await products.findByPk(
                     id, {
                         attributes: attProduct,
@@ -152,7 +152,7 @@ class ProductController {
             if (delProduct) {
                 response.status = true;
                 response.data = `ID : ${id}`
-                response.message = `Data product berhasil dihapus`;
+                response.message = `Data post berhasil dihapus`;
                 res.status(200).json(response);
             } else {
                 response.data = '';

@@ -8,7 +8,7 @@ const response = {
 
 const attUser = ['username', 'password', 'email', 'full_name'];
 const attProduct = ['name', 'price', 'weight', 'photo'];
-const attOrder = ['address', 'postcode', 'status', 'shipment_detail', 'shipment_price'];
+const attOrder = ['address', 'postcode', 'status', 'shipment_detail'];
 
 class UserController {
 
@@ -114,7 +114,7 @@ class UserController {
         try {
             if (auth) {
                 response.status = true;
-                response.message = `Data user berhasil diedit`;
+                response.message = `Data author berhasil diedit`;
                 response.data = await users.findByPk(
                     id, {
                         attributes: attUser,
@@ -153,7 +153,7 @@ class UserController {
             if (delUsers) {
                 response.status = true;
                 response.data = `ID : ${id}`;
-                response.message = `Data user berhasil dihapus`;
+                response.message = `Data author berhasil dihapus`;
                 res.status(200).json(response);
             } else {
                 response.status = false;
