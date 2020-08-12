@@ -114,7 +114,7 @@ class ProductController {
         try {
             if (pos) {
                 response.status = true
-                response.message = `Data post berhasil diubah`;
+                response.message = `Data product berhasil diubah`;
                 response.data = await products.findByPk(
                     id, {
                         attributes: attProduct,
@@ -152,7 +152,7 @@ class ProductController {
             if (delProduct) {
                 response.status = true;
                 response.data = `ID : ${id}`
-                response.message = `Data post berhasil dihapus`;
+                response.message = `Data product berhasil dihapus`;
                 res.status(200).json(response);
             } else {
                 response.data = '';

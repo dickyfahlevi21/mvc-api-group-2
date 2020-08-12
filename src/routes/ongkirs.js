@@ -4,7 +4,6 @@ const axios = require('axios');
 const http = require("http");
 const request = require("request");
 const qs = require("query-string");
-const { users, products, orders } = require("../models");
 
 router = express.Router();
 
@@ -41,10 +40,10 @@ router.post('/', (req,res) =>{
         }
     }
 
-    axios.post(config.urlGetCost, dataParse, options).then((response) =>{
+    axios.post(process.env.URL_COST, dataParse, options).then((response) =>{
         const data = response.data.rajaongkir.results[0].costs;
         if(data.length > 0) {
-            res.json(data);
+            res.json({"rajaongkir": data});
         }else{
             res.json({msg: 'empty'});
         }
