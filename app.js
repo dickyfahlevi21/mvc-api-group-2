@@ -10,6 +10,7 @@ const routeUser = require('./src/routes/users')
 const routeProduct = require('./src/routes/products')
 const routeOrder = require('./src/routes/orders')
 const routeJwt = require('./src/routes/jwts')
+const routeOngkir = require('./src/routes/ongkirs')
 
 dotenv.config();
 
@@ -21,7 +22,7 @@ app.use(
 app.use(bodyParser.json())
 
 //definisi router pd path "/ongkir"
-// app.use('/ongkir', apiRouter);
+app.use('/ongkir', routeOngkir);
 app.use('/', routeIndex)
 app.use('/user', routeUser)
 app.use('/product', routeProduct)
