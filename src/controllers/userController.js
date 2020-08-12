@@ -114,7 +114,7 @@ class UserController {
         try {
             if (auth) {
                 response.status = true;
-                response.message = `Data author berhasil diedit`;
+                response.message = `Data user berhasil diedit`;
                 response.data = await users.findByPk(
                     id, {
                         attributes: attUser,
@@ -153,7 +153,7 @@ class UserController {
             if (delUsers) {
                 response.status = true;
                 response.data = `ID : ${id}`;
-                response.message = `Data author berhasil dihapus`;
+                response.message = `Data user berhasil dihapus`;
                 res.status(200).json(response);
             } else {
                 response.status = false;
